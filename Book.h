@@ -13,6 +13,8 @@ public:
 
 	std::string getAuthor() const;
 
+	std::string getPublishDate() const;
+
 	//This function returns a dynamically created StoreItem object
 	//which is created from a string.
 	//The string info must be of the line format specificed in
@@ -23,6 +25,7 @@ public:
 	void printItem();
 
 private:
-	std::string m_title;        // movie title
-	std::string m_director;     // movie directors
+	std::string m_title;         // book title
+	std::string m_author;		 // book directors
+	std::string m_publishDate;   // book publish date
 };

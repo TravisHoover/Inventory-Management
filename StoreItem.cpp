@@ -1,5 +1,9 @@
 #include "StoreItem.h"
 
+StoreItem::StoreItem(std::string barcode, double price, int copy, int demand)
+{
+}
+
 std::string StoreItem::getBarcode(void) const
 {
 	return std::string();

@@ -1,4 +1,5 @@
 #include "Book.h"
+#include <sstream>
 
 
 
@@ -12,13 +13,18 @@ Book::Book(std::string title, std::string author, std::string publishDate, std::
 
 std::string Book::getTitle() const
 {
-	return std::string();
+	return m_title;
 }
 
 
 std::string Book::getAuthor() const
 {
-	return std::string();
+	return m_author;
+}
+
+std::string Book::getPublishDate() const
+{
+	return m_publishDate;
 }
 
 
@@ -33,6 +39,4 @@ void Book::printItem()
 }
 
 
-Book::~Book()
-{
-}
+//Book::~Book()
