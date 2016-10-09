@@ -1,13 +1,27 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+#include <vector>
+#include "StoreItem.h"
+#include "Book.h"
+#include "Movie.h"
 
 using namespace std;
 
 int main() {
 
-    char userChoice;
-    string movieChoice;
-    string author;
+    char userChoice;			//handles the input of user's menu choice
+    string movieChoice;			//movie to be inquired about
+    string authorChoice;		//author to be inquired about
+
+	fstream inventory;
+	inventory.open("inventory.txt");
+
+	vector <StoreItem> storeitems;
+
+	while (inventory) {
+		
+	};
 
 
     cout << "Menu choices are as follows: " << endl;
@@ -31,7 +45,7 @@ int main() {
 
     else if(userChoice == 'B') {
         cout << "Author: " << endl;
-        cin >> author;
+        cin >> authorChoice;
     }
 
     else if(userChoice == 'R') {
@@ -54,7 +68,7 @@ int main() {
         cout << "Error, please enter M, B, R, L, C, or Q";
 
 		
-
+	inventory.close();
     return 0;
 
 }
