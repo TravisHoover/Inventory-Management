@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -52,7 +53,7 @@ int main() {
     else
         cout << "Error, please enter M, B, R, L, C, or Q";
 
-
+		
 
     return 0;
 
