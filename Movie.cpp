@@ -1,5 +1,6 @@
 #include "Movie.h"
 #include <iostream>
+#include <sstream>
 
 
 using namespace std;
@@ -26,7 +27,21 @@ std::string Movie::getDirector() const
 
 Movie * Movie::createFromString(const std::string info)
 {
-	return nullptr;
+	Movie *temp = new Movie();
+	char ignore;
+
+	stringstream ss(info);
+	getline(ss, m_barcode, '|');
+	getline(ss, m_title, '|');
+	getline(ss, m_director, '|');
+	ss >> m_price;
+	ss >> ignore;
+	ss >> m_copy;
+	ss >> ignore;
+	ss >> m_demand;
+	ss >> ignore;
+	
+	return temp;
 }
 
 void Movie::printItem()

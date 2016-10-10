@@ -49,11 +49,17 @@ void StoreItem::decreaseDemand(void)
 }
 
 bool StoreItem::operator==(const StoreItem & rhs) const
-{
-	return false;
+{	
+	if (this->m_barcode == rhs.m_barcode)
+		return true;
+	else
+		return false;
 }
 
 bool StoreItem::operator<(const StoreItem & rhs) const
 {
-	return false;
+	if (this->m_barcode < rhs.m_barcode)
+		return true;
+	else
+		return false;
 }

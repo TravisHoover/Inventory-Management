@@ -1,6 +1,4 @@
 #include "Book.h"
-#include <iostream>
-#include <sstream>
 
 using namespace std;
 
@@ -38,7 +36,23 @@ std::string Book::getPublishDate() const
 
 Book * Book::createFromString(const std::string info)
 {
-	return nullptr;
+	Book *temp = new Book();
+	char ignore;
+
+	stringstream ss(info);
+	getline(ss, m_barcode, '|');
+	getline(ss, m_title, '|');
+	getline(ss, m_author, '|');
+	getline(ss, m_publishDate, '|');
+	ss >> m_price;
+	ss >> ignore;
+	ss >> m_copy;
+	ss >> ignore;
+	ss >> m_demand;
+	ss >> ignore;
+
+
+	return temp;
 }
 
 

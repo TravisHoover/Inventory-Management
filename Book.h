@@ -1,6 +1,8 @@
 #pragma once
 #include "StoreItem.h"
 #include <string>
+#include <sstream>
+#include <iostream>
 
 class Book : public StoreItem
 {
