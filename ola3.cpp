@@ -5,22 +5,22 @@
 #include "StoreItem.h"
 #include "Book.h"
 #include "Movie.h"
-//#include "inventory.txt"
 
 using namespace std;
 
 int main() {
 
-    //char userChoice;			//handles the input of user's menu choice
-    //string movieChoice;		//movie to be inquired about in menu option M
-    //string authorChoice;		//author to be inquired about in menu option B
+    char userChoice;			//handles the input of user's menu choice
+    string movieChoice;			//movie to be inquired about in menu option M
+    string authorChoice;		//author to be inquired about in menu option B
 
 
 	fstream inventory;                      //create fstream variable to read inventory data
 	inventory.open("inventory.txt");        //open inventory.txt
 
 
-	list <StoreItem *> storeitems;          //create list of StoreItem pointers
+	list <StoreItem *> storeitems;								 //create list of StoreItem pointers
+	
 
 
 
@@ -54,7 +54,45 @@ int main() {
 
 	};
 
-	/*
+	list <StoreItem *>::iterator it = storeitems.begin();		//create first iterator
+	list <StoreItem *>::iterator it2 = storeitems.begin();		//create second itereator
+	it2++;		//set it2 to one node ahead of it
+	for (it; it != storeitems.end(); ++it)
+	{
+		bool whileFlag = false;
+		int loop = 1000;
+
+		do {
+
+			//cout << "it:  " << (*it)->getBarcode() << '\t' << "it2:  " << (*it2)->getBarcode() << endl;
+			if ((*it)->getBarcode() < (*it2)->getBarcode()) {
+				//cout << "swapping" << endl;
+				swap(*it, *it2);
+				whileFlag = true;
+			}
+			else if ((*it)->getBarcode() > (*it2)->getBarcode())
+				swap(*it2, *it);
+
+			else
+				whileFlag = false;
+
+			if (next(it2, 1) != storeitems.end())
+				it2++;
+
+			else {
+				it2 = storeitems.begin();
+				whileFlag = true;
+			}
+			loop--;
+		} while (loop > 0);
+	}
+
+	it = storeitems.begin();
+	for (it; it != storeitems.end(); ++it) {
+		cout << (*it)->getBarcode() << endl;
+	}
+
+	
 	//Display user interface for menu
     cout << "Menu choices are as follows: " << endl;
     cout << "'M'--Inquire about a specific movie by title and display inventory information for the specified movie." << endl;
@@ -101,7 +139,7 @@ int main() {
     else
         cout << "Error, please enter M, B, R, L, C, or Q";
 
-	*/	
+		
 	inventory.close();						//close file
     return 0;
 
