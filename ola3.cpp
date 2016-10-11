@@ -55,12 +55,14 @@ int main() {
 	};
 
 	list <StoreItem *>::iterator it = storeitems.begin();		//create first iterator
-	list <StoreItem *>::iterator it2 = storeitems.begin();		//create second itereator
+	list <StoreItem *>::iterator it2 = storeitems.begin();		//create second iterator
 	it2++;		//set it2 to one node ahead of it
-	for (it; it != storeitems.end(); ++it)
+	storeitems.sort();
+	/*for (it; it != storeitems.end(); ++it)
 	{
 		bool whileFlag = false;
 		int loop = 1000;
+		storeitems.sort();
 
 		do {
 
@@ -84,8 +86,8 @@ int main() {
 				whileFlag = true;
 			}
 			loop--;
-		} while (loop > 0);
-	}
+		} while (whileFlag == true);
+	}*/
 
 	it = storeitems.begin();
 	for (it; it != storeitems.end(); ++it) {

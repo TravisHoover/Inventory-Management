@@ -68,7 +68,7 @@ void StoreItem::decreaseDemand(void)
 //overloaded operator to compare m_barcode values of two StoreItem objects
 bool StoreItem::operator==(const StoreItem & rhs) const
 {	
-	if (this->m_barcode == rhs.m_barcode)
+	if (m_barcode == rhs.m_barcode)
 		return true;
 	else
 		return false;
@@ -78,7 +78,7 @@ bool StoreItem::operator==(const StoreItem & rhs) const
 //overloaded operator to compare m_barcode values of two StoreItem objects
 bool StoreItem::operator<(const StoreItem & rhs) const
 {
-	if (this->m_barcode < rhs.m_barcode)
+	if (m_barcode < rhs.m_barcode)
 		return true;
 	else
 		return false;
