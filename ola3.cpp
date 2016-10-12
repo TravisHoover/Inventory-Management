@@ -20,7 +20,6 @@ int main() {
 
 
 	list <StoreItem *> storeitems;								 //create list of StoreItem pointers
-	
 
 
 
@@ -41,53 +40,29 @@ int main() {
 			StoreItem *temp = new Movie;
 			temp->createFromString(info);
 			storeitems.push_back(temp);
+			/*for (list <StoreItem *>::iterator it = storeitems.begin(); it != storeitems.end(); it++) {
+				if (temp < *(it))
+					storeitems.insert(it,temp);
+			};*/
 		}
             //If entry is a book, create a Book object from data contained in info and push into list of StoreItem objects
 		else if (mediaType == "Book") {
 			StoreItem *temp = new Book;
 			temp->createFromString(info);
 			storeitems.push_back(temp);
+			/*for (list <StoreItem *>::iterator it = storeitems.begin(); it != storeitems.end(); it++) {
+				if (temp < *(it))
+					storeitems.insert(it, temp);
+			};*/
 		}
-            //Error handling
-		else
-			cout << "Error reading mediaType" << endl;
-
 	};
 
-	list <StoreItem *>::iterator it = storeitems.begin();		//create first iterator
+	storeitems.sort();		//needs to sort by barcode, but is sorting by memory address
+
+	list <StoreItem *>::iterator it;
+	it = storeitems.begin();									//create first iterator
 	list <StoreItem *>::iterator it2 = storeitems.begin();		//create second iterator
 	it2++;		//set it2 to one node ahead of it
-	storeitems.sort();
-	/*for (it; it != storeitems.end(); ++it)
-	{
-		bool whileFlag = false;
-		int loop = 1000;
-		storeitems.sort();
-
-		do {
-
-			//cout << "it:  " << (*it)->getBarcode() << '\t' << "it2:  " << (*it2)->getBarcode() << endl;
-			if ((*it)->getBarcode() < (*it2)->getBarcode()) {
-				//cout << "swapping" << endl;
-				swap(*it, *it2);
-				whileFlag = true;
-			}
-			else if ((*it)->getBarcode() > (*it2)->getBarcode())
-				swap(*it2, *it);
-
-			else
-				whileFlag = false;
-
-			if (next(it2, 1) != storeitems.end())
-				it2++;
-
-			else {
-				it2 = storeitems.begin();
-				whileFlag = true;
-			}
-			loop--;
-		} while (whileFlag == true);
-	}*/
 
 	it = storeitems.begin();
 	for (it; it != storeitems.end(); ++it) {
