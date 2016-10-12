@@ -38,8 +38,8 @@ std::string Movie::getDirector() const
 //accepts string then parses to create dynamically allocated Movie object
 Movie * Movie::createFromString(const std::string info)
 {
-	Movie *temp = new Movie();
-	char ignore;
+	Movie *temp = new Movie();				//dynamically create new Movie object
+	char ignore;							//disregard delimiter
 
 	stringstream ss(info);
 	getline(ss, m_barcode, '|');
@@ -52,7 +52,7 @@ Movie * Movie::createFromString(const std::string info)
 	ss >> m_demand;
 	ss >> ignore;
 	
-	return temp;
+	return temp;							//return pointer to new object
 }
 
 

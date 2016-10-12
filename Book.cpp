@@ -45,8 +45,8 @@ std::string Book::getPublishDate() const
 //accepts string then parses to create dynamically allocated Book object
 Book * Book::createFromString(const std::string info)
 {
-	Book *temp = new Book();
-	char ignore;
+	Book *temp = new Book();		//dynamically create new Book object
+	char ignore;					//disregard delimiter
 
 	stringstream ss(info);
 	getline(ss, m_barcode, '|');
@@ -61,7 +61,7 @@ Book * Book::createFromString(const std::string info)
 	ss >> ignore;
 
 
-	return temp;
+	return temp;					//return pointer to new object
 }
 
 

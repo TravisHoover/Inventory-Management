@@ -78,10 +78,5 @@ bool StoreItem::operator==(const StoreItem & rhs) const
 //overloaded operator to compare m_barcode values of two StoreItem objects
 bool StoreItem::operator<( const StoreItem & rhs) const
 {
-	std::cout << "Object's barcodes: " << m_barcode << "\t" << rhs.m_barcode << std::endl;
-	/*if (m_barcode < rhs.m_barcode)
-		return true;
-	else
-		return false;*/
 	return this->m_barcode < rhs.m_barcode;
 }
