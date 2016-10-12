@@ -60,5 +60,11 @@ Movie * Movie::createFromString(const std::string info)
 //print member variables of the calling Movie object
 void Movie::printItem()
 {
-	cout << m_title << " " << m_director << " " << m_barcode << " " << m_price << " " << m_copy << " " << m_demand << endl;
+	Movie defaultMovie;
+
+	if (typeid(*this) == typeid(defaultMovie)) {
+
+		cout << m_title << " " << m_director << " " << m_barcode << " " << m_price << " " << m_copy << " " << m_demand << endl;
+
+	}
 }

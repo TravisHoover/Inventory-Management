@@ -1,4 +1,5 @@
 #include "Book.h"
+#include <typeinfo>
 
 using namespace std;
 
@@ -68,5 +69,11 @@ Book * Book::createFromString(const std::string info)
 //print member variables of the calling Book object
 void Book::printItem()
 {
-	cout << m_title << " " << m_author << " " << m_publishDate << " " << m_barcode << " " << m_price << " " << m_copy << " " << m_demand << endl;
+	Book defaultBook;
+
+	if (typeid(*this) == typeid(defaultBook)) {
+
+		cout << m_title << " " << m_author << " " << m_publishDate << " " << m_barcode << " " << m_price << " " << m_copy << " " << m_demand << endl;
+	
+	}
 }

@@ -8,11 +8,19 @@
 
 using namespace std;
 
+bool compare_storeitem(const StoreItem* lhs, const StoreItem* rhs) {
+	//std::cout << lhs->getBarcode() << " " << rhs->getBarcode() << std::endl;
+	int ret = lhs->getBarcode().compare(rhs->getBarcode());
+	return (ret < 0);
+}
+
 int main() {
 
     char userChoice;			//handles the input of user's menu choice
     string movieChoice;			//movie to be inquired about in menu option M
     string authorChoice;		//author to be inquired about in menu option B
+	string barcode;				//barcode of item to be operated on
+
 
 
 	fstream inventory;                      //create fstream variable to read inventory data
@@ -57,13 +65,14 @@ int main() {
 		}
 	};
 
-	storeitems.sort();		//needs to sort by barcode, but is sorting by memory address
+	storeitems.sort(compare_storeitem);		//needs to sort by barcode, but is sorting by memory address
 
 	list <StoreItem *>::iterator it;
 	it = storeitems.begin();									//create first iterator
 	list <StoreItem *>::iterator it2 = storeitems.begin();		//create second iterator
 	it2++;		//set it2 to one node ahead of it
 
+	
 	it = storeitems.begin();
 	for (it; it != storeitems.end(); ++it) {
 		cout << (*it)->getBarcode() << endl;
@@ -86,28 +95,74 @@ int main() {
 
 
     if(userChoice == 'M') {					//Search movies by title
+
         cout << "Movie title: " << endl;
         cin >> movieChoice;
 
-    }
+		cout << "******  ******" << endl;
 
+		it = storeitems.begin();
+		for (it; it != storeitems.end(); ++it) {
+
+		}
+
+    }
+	
     else if(userChoice == 'B') {			//Search books by author
         cout << "Author: " << endl;
         cin >> authorChoice;
     }
-
+	
     else if(userChoice == 'R') {			//Return movie/book to inventory
+		cout << "****** Return movie/book ******" << endl;
+		cout << "Enter barcode: ";
+		cin >> barcode;
 
+		it = storeitems.begin();
+		for (it; it != storeitems.end(); ++it) {
+
+			if (barcode == (*it)->getBarcode()) {
+
+				if ((*it)->getCopy() == 0) {
+					cout << "This item is currently out of stock" << endl;
+					exit(0);
+				}
+
+				cout << "Copy for " << (*it)->getBarcode() << " has increased from " << (*it)->getCopy();
+				(*it)->increaseCopy();
+				cout << " to " << (*it)->getCopy() << endl;
+			}
+		}
     }
-
+	
     else if(userChoice == 'L') {			//Display entire inventory by barcode
-
+		it = storeitems.begin();
+		for (it; it != storeitems.end(); ++it) {
+		cout << (*it)->getBarcode() << endl;
+		}
     }
 
     else if(userChoice == 'C') {			//Check out movie/book
+		cout << "****** Check out movie/book ******" << endl;
+		cout << "Enter barcode: ";
+		cin >> barcode;
 
+		it = storeitems.begin();
+		for (it; it != storeitems.end(); ++it) {
+			if (barcode == (*it)->getBarcode()) {
+
+				if ((*it)->getCopy() == 0) {
+					cout << "This item is currently out of stock" << endl;
+					exit(0);
+				}
+
+				cout << "Copy for " << (*it)->getBarcode() << " has decreased from " << (*it)->getCopy();
+				(*it)->decreaseCopy();
+				cout << " to " << (*it)->getCopy() << endl;
+			}
+		}
     }
-
+	
     else if(userChoice == 'Q') {            //Quit program
         exit(0);
     }
@@ -115,7 +170,7 @@ int main() {
 	 //Error handling for menu input
     else
         cout << "Error, please enter M, B, R, L, C, or Q";
-
+		
 		
 	inventory.close();						//close file
     return 0;
