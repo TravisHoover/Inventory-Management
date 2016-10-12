@@ -18,13 +18,15 @@ bool compare_storeitem(const StoreItem* lhs, const StoreItem* rhs) {
 
 int main() {
 
-    char userChoice;			//handles the input of user's menu choice
-    string movieChoice;			//movie to be inquired about in menu option M
-    string authorChoice;		//author to be inquired about in menu option B
-	string barcode;				//barcode of item to be operated on
+/*********************************  Variable declaration for menu navigation  *********************************/
+    char userChoice;			    //handles the input of user's menu choice
+    string movieChoice;			    //movie to be inquired about in menu option M
+    string authorChoice;		    //author to be inquired about in menu option B
+	string barcode;				    //barcode of item to be operated on
+    list <StoreItem *>::iterator it;//create first iterator, will initialize to storeitems.begin() at the start of for loops
 
 
-
+/*********************************  Open file  *********************************/
 	fstream inventory;                      //create fstream variable to read inventory data
 	inventory.open("inventory.txt");        //open inventory.txt
 
@@ -32,6 +34,8 @@ int main() {
 	list <StoreItem *> storeitems;								 //create list of StoreItem pointers
 
 
+
+/*****************************  Read inventory and dynamically create a list of objects  ******************************/
 
 	while (!inventory.eof()) {              //while loop to read inventory.txt. Terminates at end of file
 
@@ -54,26 +58,22 @@ int main() {
 		}
 
 
-            //If entry is a book, create a Book object from data contained in info and push into list of StoreItem objects
+        //If entry is a book, create a Book object from data contained in info and push into list of StoreItem objects
 		else if (mediaType == "Book") {
 			StoreItem *temp = new Book;         //create new Book object
 			temp->createFromString(info);       //call createFromString to parse data in info into an object
 			storeitems.push_back(temp);         //push new object onto the back of the list
 		}
 	};
-
+/**********************************************************************************************************************/
 
 
 	storeitems.sort(compare_storeitem);		    //sort the list
 
 
 
-	list <StoreItem *>::iterator it;							//create first iterator, will initialize to storeitems.begin() at the start of for loops
-	list <StoreItem *>::iterator it2 = storeitems.begin();		//create second iterator
-	it2++;		                                                //set it2 to one node ahead of it
 
-
-
+/****************************************************  User Menu  *****************************************************/
     do {
 
         //Display user interface for menu
@@ -95,18 +95,21 @@ int main() {
 
 
 
+
         if (userChoice == 'M') {                    //Search movies by title
+            Movie defaultMovie;                     //dummy movie object for comparison
 
             cout << "Movie title: " << endl;    //prompt for movie title
             cin >> movieChoice;                 //accept input for movie title
 
-            cout << "******  ******" << endl;
 
             it = storeitems.begin();
-            for (it; it != storeitems.end(); ++it) {
-
+            for (it; it != storeitems.end(); ++it) {        //iterate through entire list to find matches
+                if (typeid(*it) == typeid(defaultMovie)){       //if statement to check if it is a book or movie
+                    (*it)->printItem();                         //print movie
+                }
             }
-
+            delete defaultMovie;        //delete dummy movie object
         }
 
 
@@ -122,16 +125,16 @@ int main() {
             cin >> barcode;
 
             it = storeitems.begin();
-            for (it; it != storeitems.end(); ++it) {
+            for (it; it != storeitems.end(); ++it) {            //iterate through entire list to find matches
 
                 if (barcode == (*it)->getBarcode()) {
 
-                    if ((*it)->getCopy() == 0) {
+                    if ((*it)->getCopy() <= 0) {                //check to ensure there are copies available
                         cout << "This item is currently out of stock" << endl;
                     }
 
                     cout << "Copy for " << (*it)->getBarcode() << " has increased from " << (*it)->getCopy();
-                    (*it)->increaseCopy();
+                    (*it)->increaseCopy();                                   //"check-in" item, increase copies
                     cout << " to " << (*it)->getCopy() << endl;
                 }
             }
@@ -140,8 +143,8 @@ int main() {
 
         else if (userChoice == 'L') {            //Display entire inventory by barcode
             it = storeitems.begin();
-            for (it; it != storeitems.end(); ++it) {
-                (*it)->printItem();
+            for (it; it != storeitems.end(); ++it) {            //iterate through entire list
+                (*it)->printItem();                             //print object
             }
         }
 
@@ -152,15 +155,15 @@ int main() {
             cin >> barcode;
 
             it = storeitems.begin();
-            for (it; it != storeitems.end(); ++it) {
-                if (barcode == (*it)->getBarcode()) {
+            for (it; it != storeitems.end(); ++it) {            //iterate through entire list to find matches
+                if (barcode == (*it)->getBarcode()) {           //if current object is equal to user's requested barcode
 
-                    if ((*it)->getCopy() == 0) {
+                    if ((*it)->getCopy() <= 0) {                //check that there are copies
                         cout << "This item is currently out of stock" << endl;
                     }
 
-                    cout << "Copy for " << (*it)->getBarcode() << " has decreased from " << (*it)->getCopy();
-                    (*it)->decreaseCopy();
+                    cout << "Copy for " << (*it)->getBarcode() << " has decreased from " << (*it)->getCopy();   //inform user of changes
+                    (*it)->decreaseCopy();                                                      //"checkout" item, decrease number of copies available
                     cout << " to " << (*it)->getCopy() << endl;
                 }
             }
@@ -174,10 +177,11 @@ int main() {
             //Error handling for menu input
         else
             cout << "Error, please enter M, B, R, L, C, or Q";
-		cout << endl << endl;
+		cout << endl << endl;       //formatting, keeps menu iterations from mashing up
     }while(userChoice != 'Q');
+/**********************************************************************************************************************/
 
-		
+
 	inventory.close();						//close file
     return 0;
 
