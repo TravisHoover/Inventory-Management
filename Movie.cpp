@@ -1,6 +1,7 @@
 #include "Movie.h"
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 
 
 using namespace std;
@@ -60,9 +61,8 @@ Movie * Movie::createFromString(const std::string info)
 //print member variables of the calling Movie object
 void Movie::printItem()
 {
-	Movie defaultMovie;
+	cout << setw(10);
 
-	if (typeid(*this) == typeid(defaultMovie)) {
 		cout << "*********************** Movie " << m_barcode << " ***********************" << endl;
 		cout << "Title: " << m_title << endl;
 		cout << "Director: " << m_director << endl;
@@ -70,6 +70,4 @@ void Movie::printItem()
 		cout << "# of copies: " << m_copy << endl;
 		cout << "Current demand: " << m_demand << endl;
 
-		//cout << m_barcode << " " << m_title << " " << m_director << " " << m_barcode << " " << m_price << " " << m_copy << " " << m_demand << endl;
-	}
 }

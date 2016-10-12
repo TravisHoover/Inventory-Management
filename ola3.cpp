@@ -96,7 +96,9 @@ int main() {
 
 
 
-        if (userChoice == 'M') {                    //Search movies by title
+
+
+        if (userChoice == 'M' || userChoice == 'm') {                    //Search movies by title
             Movie defaultMovie;                     //dummy movie object for comparison
 
             cout << "Movie title: " << endl;    //prompt for movie title
@@ -113,13 +115,21 @@ int main() {
         }
 
 
-        else if (userChoice == 'B') {            //Search books by author
+
+
+
+
+        else if (userChoice == 'B' || userChoice == 'b') {            //Search books by author
             cout << "Author: " << endl;         //prompt for author
             cin >> authorChoice;                //accept input for author
         }
 
 
-        else if (userChoice == 'R') {            //Return movie/book to inventory
+
+
+
+
+        else if (userChoice == 'R' || userChoice == 'r') {            //Return movie/book to inventory
             cout << "****** Return movie/book ******" << endl;
             cout << "Enter barcode: ";
             cin >> barcode;
@@ -141,7 +151,11 @@ int main() {
         }
 
 
-        else if (userChoice == 'L') {            //Display entire inventory by barcode
+
+
+
+
+        else if (userChoice == 'L' || userChoice == 'l') {            //Display entire inventory by barcode
             it = storeitems.begin();
             for (it; it != storeitems.end(); ++it) {            //iterate through entire list
                 (*it)->printItem();                             //print object
@@ -149,7 +163,11 @@ int main() {
         }
 
 
-        else if (userChoice == 'C') {            //Check out movie/book
+
+
+
+
+        else if (userChoice == 'C' || userChoice == 'c') {            //Check out movie/book
             cout << "****** Check out movie/book ******" << endl;
             cout << "Enter barcode: ";
             cin >> barcode;
@@ -170,15 +188,20 @@ int main() {
         }
 
 
-        else if (userChoice == 'Q') {            //Quit program
+
+
+
+        else if (userChoice == 'Q' || userChoice == 'q') {            //Quit program
             exit(0);
         }
+
+
 
             //Error handling for menu input
         else
             cout << "Error, please enter M, B, R, L, C, or Q";
 		cout << endl << endl;       //formatting, keeps menu iterations from mashing up
-    }while(userChoice != 'Q');
+    }while(userChoice != 'Q' || userChoice != 'q');     //repeat menu until user chooses to stop
 /**********************************************************************************************************************/
 
 
