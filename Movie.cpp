@@ -63,8 +63,13 @@ void Movie::printItem()
 	Movie defaultMovie;
 
 	if (typeid(*this) == typeid(defaultMovie)) {
+		cout << "*********************** Movie " << m_barcode << " ***********************" << endl;
+		cout << "Title: " << m_title << endl;
+		cout << "Director: " << m_director << endl;
+		cout << "Price: \t" << m_price << endl;
+		cout << "# of copies: " << m_copy << endl;
+		cout << "Current demand: " << m_demand << endl;
 
-		cout << m_title << " " << m_director << " " << m_barcode << " " << m_price << " " << m_copy << " " << m_demand << endl;
-
+		//cout << m_barcode << " " << m_title << " " << m_director << " " << m_barcode << " " << m_price << " " << m_copy << " " << m_demand << endl;
 	}
 }

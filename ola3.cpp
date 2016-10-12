@@ -128,7 +128,6 @@ int main() {
 
                     if ((*it)->getCopy() == 0) {
                         cout << "This item is currently out of stock" << endl;
-                        exit(0);
                     }
 
                     cout << "Copy for " << (*it)->getBarcode() << " has increased from " << (*it)->getCopy();
@@ -142,7 +141,7 @@ int main() {
         else if (userChoice == 'L') {            //Display entire inventory by barcode
             it = storeitems.begin();
             for (it; it != storeitems.end(); ++it) {
-                cout << (*it)->getBarcode() << endl;
+                (*it)->printItem();
             }
         }
 
@@ -158,7 +157,6 @@ int main() {
 
                     if ((*it)->getCopy() == 0) {
                         cout << "This item is currently out of stock" << endl;
-                        exit(0);
                     }
 
                     cout << "Copy for " << (*it)->getBarcode() << " has decreased from " << (*it)->getCopy();
@@ -176,6 +174,7 @@ int main() {
             //Error handling for menu input
         else
             cout << "Error, please enter M, B, R, L, C, or Q";
+		cout << endl << endl;
     }while(userChoice != 'Q');
 
 		

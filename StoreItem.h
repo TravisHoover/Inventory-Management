@@ -12,11 +12,11 @@ public:
     //default constructor setting every thing to empty or 0
     StoreItem( std::string barcode="", double price=0, int copy=0, int demand=0);
 
-    //for debug purpose
+    /*for debug purpose
     virtual ~StoreItem()
     {
         std::cout << "Destructor called" << std::endl;
-    }
+    }*/
 
     //Get movie title
     std::string getBarcode( void ) const;
