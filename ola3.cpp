@@ -19,7 +19,7 @@ bool compare_storeitem(const StoreItem* lhs, const StoreItem* rhs) {
 int main() {
 
 /*********************************  Variable declaration for menu navigation  *********************************/
-    char userChoice;			    //handles the input of user's menu choice
+    string userChoice;			    //handles the input of user's menu choice
     string movieChoice;			//movie to be inquired about in menu option M
     string authorChoice;		    //author to be inquired about in menu option B
 	string barcode;			    //barcode of item to be operated on
@@ -91,23 +91,21 @@ int main() {
 
 
         cout << "Menu choice: ";        //prompt for menu choice
-        cin >> userChoice;              //read in user's menu choice
+        getline(cin, userChoice);              //read in user's menu choice
 
 
 
 
 
-        if (userChoice == 'M' || userChoice == 'm') {       //Search movies by title
+        if (userChoice == "M" || userChoice == "m") {       //Search movies by title
 			
             cout << "Movie title: ";						    //prompt for movie title
 			getline(cin, movieChoice);					    //accept input for movie title
 			
             it = storeitems.begin();
             for (it; it != storeitems.end(); ++it) {        //iterate through entire list to find matches
-                if (typeid(*it) == typeid(Movie)){		    //if statement to check if it is a book or movie
-					if (movieChoice == static_cast<Movie*>(*it)->getTitle())		//static cast to Movie object, check title
-						(*it)->printItem();                 //print movie
-                }
+				if (movieChoice == static_cast<Movie*>(*it)->getTitle())		//static cast to Movie object, check title
+					(*it)->printItem();                 //print movie
             }
         }
 
@@ -116,21 +114,17 @@ int main() {
 
 
 
-        else if (userChoice == 'B' || userChoice == 'b') {            //Search books by author
-			StoreItem *item;
-			Book dummyBook;
+        else if (userChoice == "B" || userChoice == "b") {            //Search books by author
 
             cout << "Author: " << endl;         //prompt for author
+			cin.clear();
             getline(cin, authorChoice);                //accept input for author
 
 			it = storeitems.begin();
 			for (it; it != storeitems.end(); ++it) {
-				item = (*it);
-				if (typeid(*item) == typeid(dummyBook)) {		    //if statement to check if it is a book or movie
 					string::size_type loc = static_cast<Book*>(*it)->getAuthor().find(authorChoice);		//search for authorChoice in m_author
 					if (loc != std::string::npos)			//if author fragment is present
-						(*it)->printItem();                 //print movie
-				}
+						(*it)->printItem();                 //print book
 			}
         }
 
@@ -139,7 +133,7 @@ int main() {
 
 
 
-        else if (userChoice == 'R' || userChoice == 'r') {            //Return movie/book to inventory
+        else if (userChoice == "R" || userChoice == "r") {            //Return movie/book to inventory
             cout << "****** Return movie/book ******" << endl;
             cout << "Enter barcode: ";
             cin >> barcode;
@@ -173,7 +167,7 @@ int main() {
 
 
 
-        else if (userChoice == 'L' || userChoice == 'l') {            //Display entire inventory by barcode
+        else if (userChoice == "L" || userChoice == "l") {            //Display entire inventory by barcode
             it = storeitems.begin();
             for (it; it != storeitems.end(); ++it) {            //iterate through entire list
                 (*it)->printItem();                             //print object
@@ -185,7 +179,7 @@ int main() {
 
 
 
-        else if (userChoice == 'C' || userChoice == 'c') {            //Check out movie/book
+        else if (userChoice == "C" || userChoice == "c") {            //Check out movie/book
             cout << "****** Check out movie/book ******" << endl;
             cout << "Enter barcode: ";
             cin >> barcode;
@@ -214,7 +208,7 @@ int main() {
 
 
 
-        else if (userChoice == 'Q' || userChoice == 'q') {            //Quit program
+        else if (userChoice == "Q" || userChoice == "q") {            //Quit program
             exit(0);
         }
 
@@ -224,7 +218,7 @@ int main() {
         else
             cout << "Error, please enter M, B, R, L, C, or Q";
 		cout << endl << endl;       //formatting, keeps menu iterations from mashing up
-    }while(userChoice != 'Q' || userChoice != 'q');     //repeat menu until user chooses to stop
+    }while(userChoice != "Q" || userChoice != "q");     //repeat menu until user chooses to stop
 
 /**********************************************************************************************************************/
 
