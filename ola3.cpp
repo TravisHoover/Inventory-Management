@@ -35,7 +35,7 @@ int main() {
 
 
 
-/*****************************  Read inventory and dynamically create a list of objects  ******************************/
+/**************************  Read inventory and dynamically create a list of objects  ***************************/
 
 	while (!inventory.eof()) {              //while loop to read inventory.txt. Terminates at end of file
 
@@ -65,7 +65,7 @@ int main() {
 			storeitems.push_back(temp);         //push new object onto the back of the list
 		}
 	};
-/**********************************************************************************************************************/
+/****************************************************************************************************************/
 
 
 	storeitems.sort(compare_storeitem);		    //sort the list
@@ -73,7 +73,7 @@ int main() {
 
 
 
-/****************************************************  User Menu  *****************************************************/
+/*************************************************  User Menu  **************************************************/
     do {
 
         //Display user interface for menu
@@ -117,11 +117,10 @@ int main() {
         else if (userChoice == "B" || userChoice == "b") {            //Search books by author
 
             cout << "Author: " << endl;         //prompt for author
-			cin.clear();
             getline(cin, authorChoice);                //accept input for author
 
 			it = storeitems.begin();
-			for (it; it != storeitems.end(); ++it) {
+			for (it; it != storeitems.end(); ++it) {                    //iterate through entire list to find matches
 					string::size_type loc = static_cast<Book*>(*it)->getAuthor().find(authorChoice);		//search for authorChoice in m_author
 					if (loc != std::string::npos)			//if author fragment is present
 						(*it)->printItem();                 //print book
@@ -136,26 +135,26 @@ int main() {
         else if (userChoice == "R" || userChoice == "r") {            //Return movie/book to inventory
             cout << "****** Return movie/book ******" << endl;
             cout << "Enter barcode: ";
-            cin >> barcode;
+            getline(cin,barcode);                                    //read in barcode
 
             it = storeitems.begin();
             for (it; it != storeitems.end(); ++it) {            //iterate through entire list to find matches
 
-                if (barcode == (*it)->getBarcode()) {
+                if (barcode == (*it)->getBarcode()) {           //if the barcodes match
 
-                    if ((*it)->getDemand() == 0) {
+                    if ((*it)->getDemand() == 0) {              //If the number to be ordered is 0, return to stock
 						cout << "The number of copies in stock for " << (*it)->getBarcode() << " has been increased from " << (*it)->getCopy();
-						(*it)->increaseCopy();
+						(*it)->increaseCopy();                  //increase number of copies in stock
 						cout << " to " << (*it)->getCopy() << endl;
                     }
 
-					else if ((*it)->getDemand() > 0) {
+					else if ((*it)->getDemand() > 0) {          //if there is demand for the item
 						cout << "The number of copies to be ordered for " << (*it)->getBarcode() << " has been decreased from " << (*it)->getDemand();
-						(*it)->decreaseDemand();
+						(*it)->decreaseDemand();                //lower demand
 						cout << " to " << (*it)->getDemand() << endl;
 					}
 
-					else {
+					else {      //error handling for barcode that is not in inventory
 						cout << "Error: Invalid barcode" << endl;
 					}
                 }
@@ -182,7 +181,7 @@ int main() {
         else if (userChoice == "C" || userChoice == "c") {            //Check out movie/book
             cout << "****** Check out movie/book ******" << endl;
             cout << "Enter barcode: ";
-            cin >> barcode;
+            getline(cin, barcode);                              //read in requested barcode
 
             it = storeitems.begin();
             for (it; it != storeitems.end(); ++it) {            //iterate through entire list to find matches
@@ -190,15 +189,15 @@ int main() {
 
                     if ((*it)->getCopy() <= 0) {                //check that there are copies
                         cout << "This item is currently out of stock" << endl;
-						(*it)->increaseDemand();
+						(*it)->increaseDemand();                //increase demand for item
                     }
 
-					else if ((*it)->getCopy() > 0) {
+					else if ((*it)->getCopy() > 0) {            //if there are copies in stock
 						cout << "The number of copies in stock for " << (*it)->getBarcode() << " has been decreased from " << (*it)->getCopy();
-						(*it)->decreaseCopy();
+						(*it)->decreaseCopy();                  //decrease number in inventory
 						cout << " to " << (*it)->getCopy() << endl;
 					}
-					else {
+					else {      //error handling for barcode that is not in inventory
 						cout << "Error: Invalid barcode" << endl;
 					}
                 }
@@ -220,7 +219,7 @@ int main() {
 		cout << endl << endl;       //formatting, keeps menu iterations from mashing up
     }while(userChoice != "Q" || userChoice != "q");     //repeat menu until user chooses to stop
 
-/**********************************************************************************************************************/
+/****************************************************************************************************************/
 
 
 	inventory.close();						//close file
