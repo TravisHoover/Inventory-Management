@@ -70,13 +70,12 @@ Book * Book::createFromString(const std::string info)
 //print member variables of the calling Book object
 void Book::printItem()
 {
-	cout << setw(10);
-
 		cout << "*********************** Book " << m_barcode << " ***********************" << endl;
-		cout << "Title: " << m_title << endl;
-		cout << "Director: " << m_author << endl;
-		cout << "Published: " << m_publishDate << endl;
-		cout << "Price: \t" << m_price << endl;
-		cout << "# of copies: " << m_copy << endl;
+		cout << "Title: \t\t" << m_title << endl;
+		cout << "Director: \t" << m_author << endl;
+		cout << "Published: \t" << m_publishDate << endl;
+		cout << "Price: \t\t" << m_price << endl;
+		cout << "# of copies: \t" << m_copy << endl;
 		cout << "Current demand: " << m_demand << endl;
+		cout << endl;
 }

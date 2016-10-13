@@ -61,13 +61,11 @@ Movie * Movie::createFromString(const std::string info)
 //print member variables of the calling Movie object
 void Movie::printItem()
 {
-	cout << setw(10);
-
 		cout << "*********************** Movie " << m_barcode << " ***********************" << endl;
-		cout << "Title: " << m_title << endl;
-		cout << "Director: " << m_director << endl;
-		cout << "Price: \t" << m_price << endl;
-		cout << "# of copies: " << m_copy << endl;
+		cout << "Title: \t\t" << m_title << endl;
+		cout << "Director: \t" << m_director << endl;
+		cout << "Price: \t\t" << m_price << endl;
+		cout << "# of copies: \t" << m_copy << endl;
 		cout << "Current demand: " << m_demand << endl;
-
+		cout << endl;
 }

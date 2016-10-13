@@ -20,9 +20,9 @@ int main() {
 
 /*********************************  Variable declaration for menu navigation  *********************************/
     char userChoice;			    //handles the input of user's menu choice
-    string movieChoice;			    //movie to be inquired about in menu option M
+    string movieChoice;			//movie to be inquired about in menu option M
     string authorChoice;		    //author to be inquired about in menu option B
-	string barcode;				    //barcode of item to be operated on
+	string barcode;			    //barcode of item to be operated on
     list <StoreItem *>::iterator it;//create first iterator, will initialize to storeitems.begin() at the start of for loops
 
 
@@ -97,21 +97,18 @@ int main() {
 
 
 
-
-        if (userChoice == 'M' || userChoice == 'm') {                    //Search movies by title
-            Movie defaultMovie;                     //dummy movie object for comparison
-
-            cout << "Movie title: " << endl;    //prompt for movie title
-            cin >> movieChoice;                 //accept input for movie title
-
-
+        if (userChoice == 'M' || userChoice == 'm') {       //Search movies by title
+			
+            cout << "Movie title: ";						    //prompt for movie title
+			getline(cin, movieChoice);					    //accept input for movie title
+			
             it = storeitems.begin();
             for (it; it != storeitems.end(); ++it) {        //iterate through entire list to find matches
-                if (typeid(*it) == typeid(defaultMovie)){       //if statement to check if it is a book or movie
-                    (*it)->printItem();                         //print movie
+                if (typeid(*it) == typeid(Movie)){		    //if statement to check if it is a book or movie
+					if (movieChoice == static_cast<Movie*>(*it)->getTitle())		//static cast to Movie object, check title
+						(*it)->printItem();                 //print movie
                 }
             }
-            delete defaultMovie;        //delete dummy movie object
         }
 
 
@@ -120,8 +117,21 @@ int main() {
 
 
         else if (userChoice == 'B' || userChoice == 'b') {            //Search books by author
+			StoreItem *item;
+			Book dummyBook;
+
             cout << "Author: " << endl;         //prompt for author
-            cin >> authorChoice;                //accept input for author
+            getline(cin, authorChoice);                //accept input for author
+
+			it = storeitems.begin();
+			for (it; it != storeitems.end(); ++it) {
+				item = (*it);
+				if (typeid(*item) == typeid(dummyBook)) {		    //if statement to check if it is a book or movie
+					string::size_type loc = static_cast<Book*>(*it)->getAuthor().find(authorChoice);		//search for authorChoice in m_author
+					if (loc != std::string::npos)			//if author fragment is present
+						(*it)->printItem();                 //print movie
+				}
+			}
         }
 
 
@@ -139,13 +149,21 @@ int main() {
 
                 if (barcode == (*it)->getBarcode()) {
 
-                    if ((*it)->getCopy() <= 0) {                //check to ensure there are copies available
-                        cout << "This item is currently out of stock" << endl;
+                    if ((*it)->getDemand() == 0) {
+						cout << "The number of copies in stock for " << (*it)->getBarcode() << " has been increased from " << (*it)->getCopy();
+						(*it)->increaseCopy();
+						cout << " to " << (*it)->getCopy() << endl;
                     }
 
-                    cout << "Copy for " << (*it)->getBarcode() << " has increased from " << (*it)->getCopy();
-                    (*it)->increaseCopy();                                   //"check-in" item, increase copies
-                    cout << " to " << (*it)->getCopy() << endl;
+					else if ((*it)->getDemand() > 0) {
+						cout << "The number of copies to be ordered for " << (*it)->getBarcode() << " has been decreased from " << (*it)->getDemand();
+						(*it)->decreaseDemand();
+						cout << " to " << (*it)->getDemand() << endl;
+					}
+
+					else {
+						cout << "Error: Invalid barcode" << endl;
+					}
                 }
             }
         }
@@ -178,15 +196,20 @@ int main() {
 
                     if ((*it)->getCopy() <= 0) {                //check that there are copies
                         cout << "This item is currently out of stock" << endl;
+						(*it)->increaseDemand();
                     }
 
-                    cout << "Copy for " << (*it)->getBarcode() << " has decreased from " << (*it)->getCopy();   //inform user of changes
-                    (*it)->decreaseCopy();                                                      //"checkout" item, decrease number of copies available
-                    cout << " to " << (*it)->getCopy() << endl;
+					else if ((*it)->getCopy() > 0) {
+						cout << "The number of copies in stock for " << (*it)->getBarcode() << " has been decreased from " << (*it)->getCopy();
+						(*it)->decreaseCopy();
+						cout << " to " << (*it)->getCopy() << endl;
+					}
+					else {
+						cout << "Error: Invalid barcode" << endl;
+					}
                 }
             }
         }
-
 
 
 
@@ -202,6 +225,7 @@ int main() {
             cout << "Error, please enter M, B, R, L, C, or Q";
 		cout << endl << endl;       //formatting, keeps menu iterations from mashing up
     }while(userChoice != 'Q' || userChoice != 'q');     //repeat menu until user chooses to stop
+
 /**********************************************************************************************************************/
 
 
